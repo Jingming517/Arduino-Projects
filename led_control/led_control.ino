@@ -1,41 +1,38 @@
 volatile int value1 = 0; 
-int val;//定义数字变量val
+int bs_val;//定义数字变量val
+int sho_val;
+int val;
 
 int LED1=2;
 int LED2=3;
 int LED3=4;
 int ballswitch=5;
-
+int shock=6;
+int sensor=7;
 
 void setup() {
-  // put your setup code here, to run once:
    pinMode(LED1,OUTPUT);
    pinMode(LED2,OUTPUT);
    pinMode(LED3,OUTPUT);
    pinMode(ballswitch,INPUT);//定义倾斜开关传感器为输出接口
-  
+   pinMode(shock,INPUT);
+   pinMode(sensor,INPUT);
 }
 
 void loop() {
-  //倾斜开关控制LED1亮灭
-  val=digitalRead(ballswitch);
-  if(val==HIGH) digitalWrite(LED1,LOW);
+  
+  //1. 倾斜开关控制LED1亮灭
+  bs_val=digitalRead(ballswitch);
+  if(bs_val==HIGH) digitalWrite(LED1,LOW);
   else digitalWrite(LED1,HIGH);
 
+  //2. 当敲击传感器检测有信号时，LED 闪烁
+  sho_val=digitalRead(shock);
+  if(sho_val==HIGH) digitalWrite(LED2,LOW);
+  else digitalWrite(LED2,HIGH);
   
-  value1 = analogRead(A0); 
-  Serial.print(value1, DEC); 
-  delay(100);
-  
-  /*
-  digitalWrite(2,HIGH);
-  delay(1000);
-  digitalWrite(2,LOW);
-  digitalWrite(3,HIGH);
-  delay(1000);
-  digitalWrite(3,LOW);
-  digitalWrite(4,HIGH);
-  delay(1000);
-  digitalWrite(4,LOW);
-  */
+  //3.
+  val=digitalRead(sensor);
+  if(val==HIGH) digitalWrite(LED3,HIGH);
+  else digitalWrite(LED3,LOW);
 }
